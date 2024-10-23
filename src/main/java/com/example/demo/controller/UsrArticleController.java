@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.dto.Article;
+import com.example.demo.dto.ResultData;
 import com.example.demo.service.ArticleService;
+import com.example.demo.util.Util;
 
 @Controller
 public class UsrArticleController {
@@ -20,12 +22,21 @@ public class UsrArticleController {
 
 	@GetMapping("/usr/article/doWrite")
 	@ResponseBody
-	public Article doWrite(String title, String body) {
+	public ResultData doWrite(String title, String body) {
+		
+		if (Util.isEmpty(title)) {
+			return ResultData.from("F-1", "제목 을(를) 입력해주세요");
+		}
+		
+		if (Util.isEmpty(body)) {
+			return ResultData.from("F-2", "내용 을(를) 입력해주세요");
+		}
+		
 		articleService.writeArticle(title, body);
 
-		Article article = articleService.getLastInsertArticle();
+//		Article article = articleService.getLastInsertArticle();
 
-		return article;
+		return ResultData.from("S-1", "게시물 작성성공", articleService.getLastInsertArticle());
 	}
 
 	@GetMapping("/usr/article/showList")
@@ -41,7 +52,7 @@ public class UsrArticleController {
 		Article foundArticle = articleService.getArticleById(id);
 
 		if (foundArticle == null) {
-			return id + "번 게시물은 존재하지 않습니다";
+			return ResultData.from("F-3", String.format("[ %d ]번 게시물은 존재하지 않습니다", id));
 		}
 
 		return foundArticle;
@@ -49,31 +60,31 @@ public class UsrArticleController {
 
 	@GetMapping("/usr/article/doModify")
 	@ResponseBody
-	public String doModify(int id, String title, String body) {
+	public ResultData doModify(int id, String title, String body) {
 
 		Article foundArticle = articleService.getArticleById(id);
 
 		if (foundArticle == null) {
-			return id + "번 게시물은 존재하지 않습니다";
+			return ResultData.from("F-3", String.format("[ %d ]번 게시물은 존재하지 않습니다", id));
 		}
 
 		articleService.modifyArticle(id, title, body);
 
-		return id + "번 게시물을 정상적으로 수정했습니다";
+		return ResultData.from("S-2", String.format("[ %d ]번 게시물을 정상적으로 수정했습니다", id));
 	}
 
 	@GetMapping("/usr/article/doDelete")
 	@ResponseBody
-	public String doDelete(int id) {
+	public ResultData doDelete(int id) {
 
 		Article foundArticle = articleService.getArticleById(id);
 
 		if (foundArticle == null) {
-			return id + "번 게시물은 존재하지 않습니다";
+			return ResultData.from("F-3", String.format("[ %d ]번 게시물은 존재하지 않습니다", id));
 		}
 
 		articleService.deleteArticle(id);
 
-		return id + "번 게시물을 정상적으로 삭제했습니다";
+		return ResultData.from("S-3", String.format("[ %d ]번 게시물을 정상적으로 삭제했습니다", id));
 	}
 }

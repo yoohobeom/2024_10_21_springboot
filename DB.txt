@@ -1,29 +1,65 @@
+DROP DATABASE IF EXISTS SB_AM;
 CREATE DATABASE SB_AM;
 USE SB_AM;
 
 CREATE TABLE article(
 	id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT
-	, regDate DATETIME
-	, updateDate DATETIME
+	, regDate DATETIME NOT NULL
+	, updateDate DATETIME NOT NULL
 	, title VARCHAR(100) NOT NULL
 	, `body` TEXT NOT NULL
 );
 
 INSERT INTO article
 	SET regDate = NOW()
-		, updateDate = NOW()
-		, title = '제목1'
-		, `body` = '내용1';
+			, updateDate = NOW()
+			, title = '제목1'
+			, `body` = '내용1';
 INSERT INTO article
 	SET regDate = NOW()
-		, updateDate = NOW()
-		, title = '제목2'
-		, `body` = '내용2';
+			, updateDate = NOW()
+			, title = '제목2'
+			, `body` = '내용2';
 INSERT INTO article
 	SET regDate = NOW()
-		, updateDate = NOW()
-		, title = '제목3'
-		, `body` = '내용3';
+			, updateDate = NOW()
+			, title = '제목3'
+			, `body` = '내용3';
+
+SELECT * FROM article;
 
 SELECT *
-	FROM article;
+	FROM article
+	ORDER BY id DESC
+	LIMIT 1;
+	
+SELECT LAST_INSERT_ID();
+
+
+CREATE TABLE `member`(
+	id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT
+	, regDate DATETIME NOT NULL
+	, loginId VARCHAR(200) NOT NULL
+	, loginPw VARCHAR(200) NOT NULL
+	, `name` VARCHAR(200) NOT NULL
+);
+
+INSERT INTO MEMBER
+	SET regDate = NOW()
+			, loginId = 'qwe'
+			, loginPw = 'qwe'
+			, `name` = 'qwe';
+INSERT INTO MEMBER
+	SET regDate = NOW()
+			, loginId = 'asd'
+			, loginPw = 'asd'
+			, `name` = 'asd';
+			INSERT INTO MEMBER
+	SET regDate = NOW()
+			, loginId = 'zxc'
+			, loginPw = 'zxc'
+			, `name` = 'zxc';
+
+SELECT *
+	FROM `member`;
+	
