@@ -15,11 +15,12 @@ public interface ArticleDao {
 
 	@Insert("""
 			INSERT INTO article
-				SET title = #{title}
+				SET regDate = NOW()
+					, updateDate = NOW()
+					, title = #{title}
 					, `body` = #{body}
-				WHERE id = #{id}
 			""")
-	public Article writeArticle(int id, String title, String body);
+	public void writeArticle(String title, String body);
 
 	@Select("""
 			SELECT *
@@ -55,4 +56,12 @@ public interface ArticleDao {
 				WHERE id = #{id}
 			""")
 	public void deleteArticle(int id);
+
+	@Select("""
+			SELECT *
+				FROM article
+				ORDER BY id DESC
+				LIMIT 1;
+			""")
+	public Article getLastInsertArticle();
 }
