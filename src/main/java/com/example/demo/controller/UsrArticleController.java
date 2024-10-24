@@ -83,7 +83,7 @@ public class UsrArticleController {
 
 	@GetMapping("/usr/article/doDelete")
 	@ResponseBody
-	public ResultData<String> doDelete(int id) {
+	public ResultData doDelete(int id) {
 		
 		Article foundArticle = articleService.getArticleById(id);
 		
