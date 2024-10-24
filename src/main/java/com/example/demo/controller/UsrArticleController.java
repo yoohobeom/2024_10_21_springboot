@@ -13,78 +13,85 @@ import com.example.demo.util.Util;
 
 @Controller
 public class UsrArticleController {
-
+	
 	private ArticleService articleService;
-
+	
 	public UsrArticleController(ArticleService articleService) {
 		this.articleService = articleService;
 	}
-
+	
 	@GetMapping("/usr/article/doWrite")
 	@ResponseBody
-	public ResultData doWrite(String title, String body) {
+	public ResultData<Article> doWrite(String title, String body) {
 		
 		if (Util.isEmpty(title)) {
-			return ResultData.from("F-1", "제목 을(를) 입력해주세요");
+			return ResultData.from("F-1", "제목을 입력해주세요");
 		}
 		
 		if (Util.isEmpty(body)) {
-			return ResultData.from("F-2", "내용 을(를) 입력해주세요");
+			return ResultData.from("F-2", "내용을 입력해주세요");
 		}
 		
 		articleService.writeArticle(title, body);
-
-//		Article article = articleService.getLastInsertArticle();
-
-		return ResultData.from("S-1", "게시물 작성성공", articleService.getLastInsertArticle());
+		
+		int id = articleService.getLastInsertId();
+		
+		return ResultData.from("S-1", String.format("%d번 게시물을 작성했습니다", id), articleService.getArticleById(id));
 	}
 
 	@GetMapping("/usr/article/showList")
 	@ResponseBody
-	public List<Article> showList() {
-		return articleService.getArticles();
+	public ResultData<List<Article>> showList() {
+		
+		List<Article> articles = articleService.getArticles();
+		
+		if (articles.size() == 0) {
+			return ResultData.from("F-1", "게시물이 존재하지 않습니다");
+		}
+		
+		return ResultData.from("S-1", "리스트 조회 성공", articles);
 	}
-
+	
+	
 	@GetMapping("/usr/article/showDetail")
 	@ResponseBody
-	public Object showDetail(int id) {
-
+	public ResultData<Article> showDetail(int id) {
+		
 		Article foundArticle = articleService.getArticleById(id);
-
+		
 		if (foundArticle == null) {
-			return ResultData.from("F-3", String.format("[ %d ]번 게시물은 존재하지 않습니다", id));
+			return ResultData.from("F-1", String.format("%d번 게시물은 존재하지 않습니다", id));
 		}
-
-		return foundArticle;
+		
+		return ResultData.from("S-1", String.format("%d번 게시물 상세보기", id), foundArticle);
 	}
-
+	
 	@GetMapping("/usr/article/doModify")
 	@ResponseBody
-	public ResultData doModify(int id, String title, String body) {
-
+	public ResultData<Article> doModify(int id, String title, String body) {
+		
 		Article foundArticle = articleService.getArticleById(id);
-
+		
 		if (foundArticle == null) {
-			return ResultData.from("F-3", String.format("[ %d ]번 게시물은 존재하지 않습니다", id));
+			return ResultData.from("F-1", String.format("%d번 게시물은 존재하지 않습니다", id));
 		}
-
+		
 		articleService.modifyArticle(id, title, body);
-
-		return ResultData.from("S-2", String.format("[ %d ]번 게시물을 정상적으로 수정했습니다", id));
+		
+		return ResultData.from("S-1", String.format("%d번 게시물을 수정했습니다", id), articleService.getArticleById(id));
 	}
 
 	@GetMapping("/usr/article/doDelete")
 	@ResponseBody
-	public ResultData doDelete(int id) {
-
+	public ResultData<String> doDelete(int id) {
+		
 		Article foundArticle = articleService.getArticleById(id);
-
+		
 		if (foundArticle == null) {
-			return ResultData.from("F-3", String.format("[ %d ]번 게시물은 존재하지 않습니다", id));
+			return ResultData.from("F-1", String.format("%d번 게시물은 존재하지 않습니다", id));
 		}
-
+		
 		articleService.deleteArticle(id);
-
-		return ResultData.from("S-3", String.format("[ %d ]번 게시물을 정상적으로 삭제했습니다", id));
+		return ResultData.from("S-1", String.format("%d번 게시물을 삭제했습니다", id));
 	}
 }

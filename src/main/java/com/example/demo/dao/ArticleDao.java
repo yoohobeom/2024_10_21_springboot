@@ -12,7 +12,7 @@ import com.example.demo.dto.Article;
 
 @Mapper
 public interface ArticleDao {
-
+	
 	@Insert("""
 			INSERT INTO article
 				SET regDate = NOW()
@@ -40,12 +40,12 @@ public interface ArticleDao {
 			<script>
 			UPDATE article
 				SET updateDate = NOW()
-				<if test="title != null and title != ''">
-					title = #{title}
-				</if>
-				<if test="body != null and body != ''">
-					`body` = #{body}
-				</if>
+					<if test="title != null and title != ''">
+						, title = #{title}
+					</if>
+					<if test="body != null and body != ''">
+						, `body` = #{body}
+					</if>
 				WHERE id = #{id}
 			</script>
 			""")
@@ -58,10 +58,7 @@ public interface ArticleDao {
 	public void deleteArticle(int id);
 
 	@Select("""
-			SELECT *
-				FROM article
-				ORDER BY id DESC
-				LIMIT 1;
+			SELECT LAST_INSERT_ID();
 			""")
-	public Article getLastInsertArticle();
+	public int getLastInsertId();
 }
