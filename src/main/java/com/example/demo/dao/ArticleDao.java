@@ -17,15 +17,17 @@ public interface ArticleDao {
 			INSERT INTO article
 				SET regDate = NOW()
 					, updateDate = NOW()
+					, memberId = #{loginedMemberId}
 					, title = #{title}
 					, `body` = #{body}
 			""")
-	public void writeArticle(String title, String body);
+	public void writeArticle(int loginedMemberId, String title, String body);
 
 	@Select("""
 			SELECT *
 				FROM article
-				ORDER BY id DESC
+				INNER JOIN `member`
+				ON memberId = `member`.id;
 			""")
 	public List<Article> getArticles();
 

@@ -11,6 +11,9 @@ import com.example.demo.dto.ResultData;
 import com.example.demo.service.ArticleService;
 import com.example.demo.util.Util;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class UsrArticleController {
 	
@@ -22,17 +25,27 @@ public class UsrArticleController {
 	
 	@GetMapping("/usr/article/doWrite")
 	@ResponseBody
-	public ResultData<Article> doWrite(String title, String body) {
+	public ResultData<Article> doWrite(HttpSession session, String title, String body) {
+		
+		int loginedMemberId = -1;
+		
+		if (session.getAttribute("loginedMemberId") != null) {
+			loginedMemberId = (int) session.getAttribute("loginedMemberId");
+		}
+		
+		if (loginedMemberId == -1) {
+			return ResultData.from("F-1", "로그인 후 이용할 수 있는 기능입니다");
+		}
 		
 		if (Util.isEmpty(title)) {
-			return ResultData.from("F-1", "제목을 입력해주세요");
+			return ResultData.from("F-2", "제목을 입력해주세요");
 		}
 		
 		if (Util.isEmpty(body)) {
-			return ResultData.from("F-2", "내용을 입력해주세요");
+			return ResultData.from("F-3", "내용을 입력해주세요");
 		}
 		
-		articleService.writeArticle(title, body);
+		articleService.writeArticle(loginedMemberId, title, body);
 		
 		int id = articleService.getLastInsertId();
 		
@@ -41,8 +54,7 @@ public class UsrArticleController {
 
 	@GetMapping("/usr/article/showList")
 	@ResponseBody
-	public ResultData<List<Article>> showList() {
-		
+	public ResultData<List<Article>> showList(HttpServletRequest requst) {
 		List<Article> articles = articleService.getArticles();
 		
 		if (articles.size() == 0) {
