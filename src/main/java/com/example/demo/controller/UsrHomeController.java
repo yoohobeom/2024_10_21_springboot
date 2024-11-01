@@ -8,8 +8,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class UsrHomeController {
 
 	@GetMapping("/usr/home/main")
-	@ResponseBody
+//	@ResponseBody
 	public String showMain() {
-		return "안녕하세요";
+		return "usr/home/main";
+	}
+
+	@GetMapping("/")
+	public String showMain2() {
+		return "main";
 	}
 }
