@@ -34,8 +34,12 @@
 		</table>
 	</div>
 
-	<div class="pt-2">
-		<button class="a rounded-lg bg-green-600" onclick="history.back();">뒤로가기</button>
+	<div class="pt-2 flex justify-between">
+		<button onclick="history.back();">뒤로가기</button>
+		
+		<c:if test="${loginedMemberId == article.getMemberId() }">
+			<a onclick="if(confirm('정말 삭제하시겠습니까?') == false) {return false;};" href="/usr/article/doDelete?id=${foundArticle.getId() }">삭제</a>
+		</c:if>
 	</div>
 </section>
 <%@ include file="/WEB-INF/jsp/common/footer.jsp"%>

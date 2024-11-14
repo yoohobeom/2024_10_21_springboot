@@ -9,4 +9,26 @@ public class Util {
 
 		return str.trim().length() == 0;
 	}
+
+	public static String jsReplace(String msg, String uri) {
+		if (msg == null) {
+			msg = null;
+		}
+
+		if (uri == null) {
+			uri = null;
+		}
+
+		return String.format("""
+				<script>
+					const msg = '%s'.trim();
+
+					if (msg.length() > 0) {
+						alert(msg);
+					}
+
+					location.relpace('%s');
+				</script>
+				""", msg, uri);
+	}
 }
