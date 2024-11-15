@@ -61,7 +61,6 @@ public class UsrArticleController {
 		return "usr/article/list";
 	}
 	
-	
 	@GetMapping("/usr/article/detail")
 	public String showDetail(HttpSession session, Model model, int id) {
 		
