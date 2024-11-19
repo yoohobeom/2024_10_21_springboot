@@ -10,56 +10,65 @@ CREATE TABLE article(
 	, `body` TEXT NOT NULL
 );
 
+ALTER TABLE article ADD COLUMN memberId INT UNSIGNED NOT NULL AFTER updateDate;
+ALTER TABLE article ADD COLUMN boardId INT UNSIGNED NOT NULL AFTER updateDate;
+
+CREATE TABLE `member`(
+	id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT
+	, regDate DATETIME NOT NULL
+	, updateDate DATETIME NOT NULL
+	, loginId VARCHAR(100) NOT NULL
+	, loginPw VARCHAR(100) NOT NULL
+	, `name` VARCHAR(20) NOT NULL
+);
+
+ALTER TABLE `member` MODIFY COLUMN loginId VARCHAR(100) NOT NULL UNIQUE;
+
+CREATE TABLE board(
+	id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT
+	, `name` VARCHAR(20) NOT NULL COMMENT '게시판 이름'
+);
+
 INSERT INTO article
 	SET regDate = NOW()
 			, updateDate = NOW()
-			, title = '제목1'
-			, `body` = '내용1';
+			, memberId = 1
+			, boardId = 1
+			, title = '공지1'
+			, `body` = '공지내용1';
 INSERT INTO article
 	SET regDate = NOW()
 			, updateDate = NOW()
+			, memberId = 2
+			, boardId = 2
 			, title = '제목2'
 			, `body` = '내용2';
 INSERT INTO article
 	SET regDate = NOW()
 			, updateDate = NOW()
+			, memberId = 2
+			, boardId = 2
 			, title = '제목3'
 			, `body` = '내용3';
 
+INSERT INTO `member`
+	SET regDate = NOW()
+			, updateDate = NOW()
+			, loginId = 'test1'
+			, loginPw = 'test1'
+			, `name` = '유저1';
+INSERT INTO `member`
+	SET regDate = NOW()
+			, updateDate = NOW()
+			, loginId = 'test2'
+			, loginPw = 'test2'
+			, `name` = '유저2';
+			
+INSERT INTO board
+	SET `name` = '공지사항';
+INSERT INTO board
+	SET `name` = '자유';
+			
 SELECT * FROM article;
-
-SELECT *
-	FROM article
-	ORDER BY id DESC
-	LIMIT 1;
-	
-SELECT LAST_INSERT_ID();
-
-
-CREATE TABLE `member`(
-	id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT
-	, regDate DATETIME NOT NULL
-	, loginId VARCHAR(200) NOT NULL
-	, loginPw VARCHAR(200) NOT NULL
-	, `name` VARCHAR(200) NOT NULL
-);
-
-INSERT INTO MEMBER
-	SET regDate = NOW()
-			, loginId = 'qwe'
-			, loginPw = 'qwe'
-			, `name` = 'qwe';
-INSERT INTO MEMBER
-	SET regDate = NOW()
-			, loginId = 'asd'
-			, loginPw = 'asd'
-			, `name` = 'asd';
-			INSERT INTO MEMBER
-	SET regDate = NOW()
-			, loginId = 'zxc'
-			, loginPw = 'zxc'
-			, `name` = 'zxc';
-
-SELECT *
-	FROM `member`;
-	
+SELECT * FROM `member`;
+SELECT * FROM board;

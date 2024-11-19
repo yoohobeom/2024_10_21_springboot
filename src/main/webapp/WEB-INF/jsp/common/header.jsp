@@ -8,6 +8,8 @@
 <title>${pageTitle }</title>
 <!-- 테일윈드CSS -->
 <script src="https://cdn.tailwindcss.com"></script>
+<!-- 데이지 UI -->
+<link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.14/dist/full.min.css" rel="stylesheet" type="text/css" />
 <!-- JQuery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <!-- 폰트어썸 -->
@@ -21,7 +23,16 @@
 		<div class="grow"></div>
 		<ul class="flex">
 			<li class="hover:underline"><a class="h-full px-3 flex items-center" href="${pageContext.request.contextPath}/">HOME</a></li>
-			<li class="hover:underline"><a class="h-full px-3 flex items-center" href="${pageContext.request.contextPath}/usr/article/list">LIST</a></li>
+			<li class="hover:underline">
+				<a class="h-full px-3 flex items-center" href="${pageContext.request.contextPath}/usr/article/list">LIST</a>
+				<div class="dropdown dropdown-hover">
+				  <div tabindex="0" role="button" class="btn m-1">Hover</div>
+				  <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+				    <li><a href="${pageContext.request.contextPath}/usr/article/list?boardId=1&cPage=1">공지사항</a></li>
+				    <li><a href="${pageContext.request.contextPath}/usr/article/list?boardId=2&cPage=1">자유게시판</a></li>
+				  </ul>
+				</div>
+			</li>
 			<c:if test="${rq.getLoginedMemberId() == -1 }">
 				<li class="hover:underline"><a class="h-full px-3 flex items-center" href="${pageContext.request.contextPath}/usr/member/login">LOGIN</a></li>
 			</c:if>
@@ -33,6 +44,6 @@
 
 	<section class="my-4 text-2xl">
 		<div class="container mx-auto">
-			<div>${pageTitle }&nbsp;페이지</div>
+			<div>${pageTitle }</div>
 		</div>
 	</section>

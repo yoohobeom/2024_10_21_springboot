@@ -38,10 +38,14 @@
 		</div>
 		
 		<div class="btns mt-3 text-sm flex justify-between">
-			<button onclick="history.back();">뒤로가기</button>
-			
+			<div>
+				<button class="btn bten-active btn-sm" onclick="history.back();">뒤로가기</button>
+			</div>
 			<c:if test="${rq.getLoginedMemberId() == article.getMemberId() }">
-				<a onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;" href="doDelete?id=${article.getId() }">삭제</a>
+				<div>
+				<a class="btn bten-active btn-sm" href="modify?id=${article.getId() }">수정</a>
+				<a class="btn bten-active btn-sm" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;" href="doDelete?id=${article.getId() }">삭제</a>
+				</div>
 			</c:if>
 		</div>
 	</div>

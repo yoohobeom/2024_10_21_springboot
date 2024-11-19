@@ -8,17 +8,27 @@
 }
 
 html * {
-	font-family: Cafe24Ssurround', sans-serif;
+	font-family: 'Cafe24Ssurround', sans-serif;
+	text-underline-position: under;
 }
 
-.top-menu-box {
-	font-size: 2rem;
+.table-box > table {
+	width: 100%;
 }
 
-.table-box table th,td {
+.table-box > table th, .table-box > table td{
+	border: 1px solid black;
 	padding: 10px;
+	text-align: center;
 }
 
-.table-box table th {
-	border: solid 1px;
+.btns > button, .btns > a {
+	border: 1px solid black;
+	border-radius: 6px;
+	padding: 5px;
+}
+
+.btns > button:hover, .btns > a:hover {
+	background-color: black;
+	color: white;
 }
