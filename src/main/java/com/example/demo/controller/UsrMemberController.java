@@ -41,14 +41,15 @@ public class UsrMemberController {
 	
 	@GetMapping("/usr/member/loginIdDupChk")
 	@ResponseBody
-	public ResultData<Map<String, String>> data(String loginId) {
-
-		Map<String, String> map = new HashMap<>();
+	public ResultData loginIdDupChk(String loginId) {
+		
 		Member member = memberService.getMemberByLoginId(loginId);
 		
-		map.put("loginId", loginId);
+		if (member != null) {
+			return ResultData.from("F-1", String.format("[ %s ]은(는) 이미 사용중인 아이디입니다", loginId));
+		}
 		
-		return ResultData.from("code", loginId, map);
+		return ResultData.from("S-1", String.format("[ %s ]은(는) 사용가능한 아이디입니다", loginId));
 	}
 	
 	@GetMapping("/usr/member/login")
