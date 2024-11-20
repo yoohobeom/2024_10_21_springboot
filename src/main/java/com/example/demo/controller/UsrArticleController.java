@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.dto.Article;
@@ -45,7 +46,7 @@ public class UsrArticleController {
 	}
 
 	@GetMapping("/usr/article/list")
-	public String showList(Model model, int boardId, int cPage) {
+	public String showList(Model model, int boardId, @RequestParam(defaultValue = "1") int cPage) {
 
 		if (cPage == 0) {
 			cPage = 1;
@@ -63,10 +64,6 @@ public class UsrArticleController {
 		int from = ((cPage - 1) / 10) * 10 + 1;
 		int end = (((cPage - 1) / 10) + 1) * 10;
 		
-		if (from < 1) {
-			from = 1;
-		}
-		
 		if (end > totalPagesCnt) {
 			end = totalPagesCnt;
 		}
@@ -77,6 +74,7 @@ public class UsrArticleController {
 		model.addAttribute("totalPagesCnt", totalPagesCnt);
 		model.addAttribute("from", from);
 		model.addAttribute("end", end);
+		model.addAttribute("cPage", cPage);
 
 		return "usr/article/list";
 	}
