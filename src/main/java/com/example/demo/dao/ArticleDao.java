@@ -80,4 +80,5 @@ public interface ArticleDao {
 				WHERE boardId = #{boardId};
 			""")
 	public int getAtriclesCnt(int boardId);
+
 }

@@ -48,5 +48,4 @@ public class ArticleService {
 	public int getAtriclesCnt(int boardId) {
 		return articleDao.getAtriclesCnt(boardId);
 	}
-
 }

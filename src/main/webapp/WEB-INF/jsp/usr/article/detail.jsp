@@ -6,6 +6,20 @@
 
 <%@ include file="/WEB-INF/jsp/common/header.jsp" %>
 
+<script>
+	constreplyForm_onSubmit = function(form) {
+		form.body.value = form.body.value.trim();
+		
+		if (form.body.value.length == 0) {
+			alert('내용을 입력해주세요');
+			form.body.focus();
+			return;
+		}
+		
+		form.submit();
+	}
+</script>
+
 <section class="mt-8">
 	<div class="container mx-auto">
 		<div class="table-box">
@@ -48,6 +62,14 @@
 				</div>
 			</c:if>
 		</div>
+		
+		<form action="doReply" method="post" onsubmit="replyForm_onSubmit(this); return false;">
+			<div>
+				<input type="hidden" name="articleId" value=${article.getId() } />
+				<textarea class="textarea textarea-bordered" name="body" placeholder="댓글을 입력해주세요"></textarea>
+				<button class="btn btn-active">확인</button>
+			</div>
+		</form>
 	</div>
 </section>
 

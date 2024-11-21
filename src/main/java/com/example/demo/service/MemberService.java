@@ -7,9 +7,9 @@ import com.example.demo.dto.Member;
 
 @Service
 public class MemberService {
-	
+
 	private MemberDao memberDao;
-	
+
 	public MemberService(MemberDao memberDao) {
 		this.memberDao = memberDao;
 	}
@@ -28,5 +28,10 @@ public class MemberService {
 
 	public int getLastInsertId() {
 		return memberDao.getLastInsertId();
+	}
+
+	public void modifyPassword(int loginedMemberId, String loginPw) {
+		memberDao.modifyPassword(loginedMemberId, loginPw);
+
 	}
 }
