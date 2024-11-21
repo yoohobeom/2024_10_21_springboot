@@ -119,6 +119,15 @@ SELECT * FROM `member`;
 SELECT * FROM board;
 SELECT * FROM reply;
 
+SELECT *
+	FROM reply AS r
+	INNER JOIN article AS a
+	ON r.relId = a.id;
+	
+SELECT *
+	FROM reply
+	WHERE relId = #{article.getId};
+
 INSERT INTO article
 (
     regDate, updateDate, boardId, memberId, title, `body`
