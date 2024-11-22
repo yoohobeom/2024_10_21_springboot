@@ -45,7 +45,7 @@ public class ArticleService {
 		return articleDao.getBoardById(boardId);
 	}
 
-	public int getAtriclesCnt(int boardId) {
-		return articleDao.getAtriclesCnt(boardId);
+	public int getArticlesCnt(int boardId) {
+		return articleDao.getArticlesCnt(boardId);
 	}
 }
