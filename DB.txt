@@ -12,6 +12,7 @@ CREATE TABLE article(
 
 ALTER TABLE article ADD COLUMN memberId INT UNSIGNED NOT NULL AFTER updateDate;
 ALTER TABLE article ADD COLUMN boardId INT UNSIGNED NOT NULL AFTER updateDate;
+ALTER TABLE article ADD COLUMN views INT UNSIGNED NOT NULL DEFAULT 0;
 
 CREATE TABLE `member`(
 	id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT
@@ -37,6 +38,14 @@ CREATE TABLE reply(
 	, relTypeCode VARCHAR(20) NOT NULL
 	, relId INT UNSIGNED NOT NULL
 	, `body` TEXT NOT NULL
+);
+
+CREATE TABLE likePoint(
+	id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT
+	, memberId INT UNSIGNED NOT NULL
+	, relTypeCode VARCHAR(20) NOT NULL
+	, relId INT UNSIGNED NOT NULL
+	, `point` INT NOT NULL DEFAULT 1
 );
 
 INSERT INTO article
@@ -113,20 +122,29 @@ INSERT INTO reply
         , relTypeCode = 'article'
         , relId = 3
         , `body` = '댓글테스트4';
-			
+
+INSERT INTO likePoint
+	SET memberId = 2
+        , relTypeCode = 'article'
+        , relId = 3;
+INSERT INTO likePoint
+	SET memberId = 1
+        , relTypeCode = 'article'
+        , relId = 3;
+INSERT INTO likePoint
+	SET memberId = 1
+        , relTypeCode = 'article'
+        , relId = 1;
+INSERT INTO likePoint
+	SET memberId = 3
+        , relTypeCode = 'article'
+        , relId = 2;
+        			
 SELECT * FROM article;
 SELECT * FROM `member`;
 SELECT * FROM board;
 SELECT * FROM reply;
-
-SELECT *
-	FROM reply AS r
-	INNER JOIN article AS a
-	ON r.relId = a.id;
-	
-SELECT *
-	FROM reply
-	WHERE relId = #{article.getId};
+SELECT * FROM likePoint;
 
 INSERT INTO article
 (

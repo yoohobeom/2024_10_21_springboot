@@ -23,16 +23,8 @@
 		<div class="grow"></div>
 		<ul class="flex">
 			<li class="hover:underline"><a class="h-full px-3 flex items-center" href="${pageContext.request.contextPath}/">HOME</a></li>
-			<li class="hover:underline">
-				<a class="h-full px-3 flex items-center" href="${pageContext.request.contextPath}/usr/article/list">LIST</a>
-				<div class="dropdown dropdown-hover">
-				  <div tabindex="0" role="button" class="btn m-1">Hover</div>
-				  <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
-				    <li><a href="${pageContext.request.contextPath}/usr/article/list?boardId=1">공지사항</a></li>
-				    <li><a href="${pageContext.request.contextPath}/usr/article/list?boardId=2">자유게시판</a></li>
-				  </ul>
-				</div>
-			</li>
+			<li class="hover:underline"><a class="h-full px-3 flex items-center" href="${pageContext.request.contextPath}/usr/article/list?boardId=1">공지사항</a></li>
+			<li class="hover:underline"><a class="h-full px-3 flex items-center" href="${pageContext.request.contextPath}/usr/article/list?boardId=2">자유게시판</a></li>
 			<c:if test="${rq.getLoginedMemberId() == -1 }">
 				<li class="hover:underline"><a class="h-full px-3 flex items-center" href="${pageContext.request.contextPath}/usr/member/join">JOIN</a></li>
 				<li class="hover:underline"><a class="h-full px-3 flex items-center" href="${pageContext.request.contextPath}/usr/member/login">LOGIN</a></li>
